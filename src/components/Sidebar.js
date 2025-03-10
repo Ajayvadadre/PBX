@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Nav, Button } from 'react-bootstrap';
 import { Link, useLocation } from 'react-router-dom';
-import { FaUsers, FaComments, FaPhone, FaAddressBook, FaNetworkWired,FaVideo,FaVoicemail, FaCog, FaSignOutAlt, FaBars } from 'react-icons/fa';
+import { FaUsers, FaComments, FaPhone, FaAddressBook, FaNetworkWired, FaVideo, FaVoicemail, FaCog, FaSignOutAlt, FaBars, FaTimes } from 'react-icons/fa';
 import './Sidebar.css';
 
-const Sidebar = ({ onLogout }) => {
+const Sidebar = ({ onLogout, isOpen, onClose, onCollapse }) => {
   const location = useLocation();
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isCollapsed, setIsCollapsed] = React.useState(false);
 
   const menuItems = [
     { path: '/dashboard', icon: <FaUsers />, label: 'Dashboard' },
@@ -21,15 +21,29 @@ const Sidebar = ({ onLogout }) => {
     { path: '/settings', icon: <FaCog />, label: 'Settings' },
   ];
 
+  const handleCollapse = (collapsed) => {
+    setIsCollapsed(collapsed);
+    onCollapse(collapsed);
+  };
+
   return (
-    <div className={`sidebar-container ${isCollapsed ? 'collapsed' : ''}`}>
-      <Button 
-        variant="link" 
-        className="toggle-button"
-        onClick={() => setIsCollapsed(!isCollapsed)}
-      >
-        <FaBars />
-      </Button>
+    <div className={`sidebar-container ${isCollapsed ? 'collapsed' : ''} ${isOpen ? 'show' : ''}`}>
+      <div className="sidebar-header-controls">
+        <Button 
+          variant="link" 
+          className="toggle-button d-none d-md-block"
+          onClick={() => handleCollapse(!isCollapsed)}
+        >
+          <FaBars />
+        </Button>
+        <Button
+          variant="link"
+          className="close-button d-md-none"
+          onClick={onClose}
+        >
+          <FaTimes />
+        </Button>
+      </div>
 
       <div className="sidebar-header">
         <h3 className="brand-name">PBX</h3>

@@ -1,11 +1,18 @@
 import React from 'react';
 import { Navbar, Nav, Container, Button, Form, InputGroup } from 'react-bootstrap';
-import { FaSearch, FaBell, FaUserCircle } from 'react-icons/fa';
+import { FaSearch, FaBell, FaUserCircle, FaBars } from 'react-icons/fa';
 
-const TopNavbar = () => {
+const TopNavbar = ({ toggleSidebar }) => {
   return (
     <Navbar bg="white" className="border-bottom shadow-sm">
       <Container fluid>
+        <Button 
+          variant="link" 
+          className="d-md-none me-2 p-0 text-dark"
+          onClick={toggleSidebar}
+        >
+          <FaBars size={24} />
+        </Button>
         <Navbar.Brand className="d-none d-md-block">
           <h5 className="mb-0">FONIMO</h5>
           {/* <small className="text-muted">VoIP Softphone</small> */}
